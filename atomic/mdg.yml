@@ -1,0 +1,7 @@
+- hosts: all
+  vars:
+    flavor: 'next' #Next for the development branch, docker-compose for the latest stable release
+  tasks:
+    - include_tasks: tasks/compose.yml
+    - include_tasks: tasks/mdg.yml
+    - include_tasks: tasks/backup.yml

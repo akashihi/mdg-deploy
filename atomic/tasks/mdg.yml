@@ -1,0 +1,26 @@
+- name: Configure system parameters for ES
+  sysctl:
+    name: vm.max_map_count
+    value: 262144
+    state: present
+
+- name: Copy deployment descriptor
+  copy:
+    src: ../compose/
+    dest: /usr/local/etc/
+    directory_mode: yes
+
+- name: Make dictionary files accessible
+  shell: find /usr/local/etc/esdb -type d  |xargs chmod a+rx && find /usr/local/etc/esdb -type d  |xargs chmod a+rx
+
+- name: Deploy a service
+  template:
+    src: templates/mdg.service.j2
+    dest: /etc/systemd/system/mdg.service
+
+- name: Start mdg services
+  systemd:
+    daemon_reload: yes
+    enabled: yes
+    state: started
+    name: mdg

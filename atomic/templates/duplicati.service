@@ -1,0 +1,15 @@
+[Unit]
+Description=Duplicati
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+# Remove old containers, images and volumes
+ExecStartPre=-/usr/bin/docker rm -v -f duplicati
+ExecStartPre=/usr/bin/docker pull linuxserver/duplicati
+
+ExecStart=/usr/bin/docker run --name=duplicati -v /srv/duplicati:/config -v /srv/mdgbackup:/source -p 8200:8200 -e PGID=0 -e PUID=0 linuxserver/duplicati
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,54 @@
+version: "3"
+
+volumes:
+  db-data:
+  es-data:
+
+networks:
+  frontend:
+  backend:
+    internal: true
+
+services:
+  postgres:
+    build: ./mdgdb
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - backend
+    restart: always
+  elasticsearch:
+    build: ./esdb
+    volumes:
+      - es-data:/usr/share/elasticsearch/data
+    networks:
+      - backend
+    restart: always
+  mdg:
+    image: akashihi/mdg:next
+    networks:
+      - backend
+    environment:
+      - APPLICATION_SECRET=composer
+    restart: always
+    depends_on:
+      - postgres
+  rates:
+    image: akashihi/mdg-rate-loader:next
+    networks:
+      - backend
+      - frontend
+    restart: always
+    depends_on:
+      - postgres
+  ui:
+    image: akashihi/mdg-web-ui:next
+    networks:
+      - backend
+      - frontend
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+    depends_on:
+      - mdg

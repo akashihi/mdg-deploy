@@ -1,0 +1,22 @@
+[Unit]
+Description=MDG
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+
+# Remove old containers, images and volumes
+ExecStartPre=/usr/local/bin/docker-compose -f /usr/local/etc/{{ flavor }}.yml down
+ExecStartPre=/usr/local/bin/docker-compose -f /usr/local/etc/{{ flavor }}.yml rm
+ExecStartPre=-/bin/bash -c 'docker rmi $(docker images | grep "<none>" | awk \'{print $3}\')'
+ExecStartPre=-/bin/bash -c 'docker rm -v $(docker ps -aq)'
+
+# Compose up
+ExecStart=/usr/local/bin/docker-compose -f /usr/local/etc/{{ flavor }}.yml up
+
+# Compose down, remove containers and volumes
+ExecStop=/usr/local/bin/docker-compose -f /usr/local/etc/{{ flavor }}.yml down
+
+[Install]
+WantedBy=multi-user.target

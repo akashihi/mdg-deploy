@@ -1,0 +1,39 @@
+- name: Prepare backup location
+  file: 
+    path: /srv/mdgbackup 
+    state: directory
+
+- name: Deploy backup service
+  copy:
+    src: templates/mdg-backup.service
+    dest: /etc/systemd/system/mdg-backup.service
+
+- name: Schedule backup
+  copy:
+    src: templates/mdg-backup.timer
+    dest: /etc/systemd/system/mdg-backup.timer
+
+- name: Start backup
+  systemd:
+    daemon_reload: yes
+    enabled: yes
+    state: started
+    name: mdg-backup.timer
+
+- name: Prepare duplicati config location
+  file: 
+    path: /srv/duplicati
+    state: directory
+
+- name: Deploy duplicati service
+  copy:
+    src: templates/duplicati.service
+    dest: /etc/systemd/system/duplicati.service
+
+- name: Start duplicati
+  systemd:
+    daemon_reload: yes
+    enabled: yes
+    state: started
+    name: duplicati.service
+

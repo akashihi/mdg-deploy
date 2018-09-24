@@ -1,0 +1,7 @@
+[Unit]
+Description=MDG backup service
+Requires=mdg.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash -c '/usr/bin/docker exec -t etc_postgres_1 pg_dumpall -c -U postgres > /srv/mdgbackup/dump_mdg.sql'
