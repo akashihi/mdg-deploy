@@ -18,6 +18,7 @@ services:
       - backend
     restart: always
   elasticsearch:
+    image: elasticsearch:6.5.4
     build: ./esdb
     volumes:
       - es-data:/usr/share/elasticsearch/data
