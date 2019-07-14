@@ -11,14 +11,14 @@ networks:
 
 services:
   postgres:
-    build: ./mdgdb
+    image: postgres:11.4
     volumes:
       - db-data:/var/lib/postgresql/data
+      - ./00-createdb.sql:/docker-entrypoint-initdb.d/00-createdb.sql
     networks:
       - backend
     restart: always
   elasticsearch:
-    image: elasticsearch:6.5.4
     build: ./esdb
     volumes:
       - es-data:/usr/share/elasticsearch/data
