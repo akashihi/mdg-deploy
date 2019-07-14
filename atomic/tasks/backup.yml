@@ -26,16 +26,10 @@
     state: directory
 
 - name: Make duplicati config accessible
-  sefcontext:
-    target: /srv/duplicati
-    setype: svirt_sandbox_file_t
-    state: present
+  command: chcon -Rt svirt_sandbox_file_t /srv/duplicati
 
 - name: Make backup location accessible
-  sefcontext:
-    target: /srv/mdgbackup
-    setype: svirt_sandbox_file_t
-    state: present
+  command: chcon -Rt svirt_sandbox_file_t /srv/mdgbackup
 
 - name: Pre pull duplicati
   docker_image:
