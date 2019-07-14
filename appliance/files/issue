@@ -1,0 +1,13 @@
+##################################################################
+##                                                              ##
+## MDG appliance VM                                             ##
+##                                                              ##
+## MDG is available on the port http://\4{eth0}:80         ##
+##                                                              ##
+## Backup system dashboard is at port http://\4{eth0}:8299 ##
+##                                                              ##
+## Default login is root/mdg                                    ##
+##                                                              ##
+## Don't forget to change the password                          ##
+##                                                              ##
+##################################################################

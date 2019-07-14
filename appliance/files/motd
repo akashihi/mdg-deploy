@@ -1,0 +1,17 @@
+####################################################################################
+##                                                                                ##
+## MDG Web UI is at port 80                                                       ##
+##                                                                                ##
+## Backup system dashboard is at port 8200                                        ##
+##                                                                                ##
+## Please configure backup system to store  database dump outside of that system  ##
+## to eliminate risk of loosing data                                              ##
+##                                                                                ##
+## To update mdg run                                                              ##
+## /usr/local/bin/docker-compose -f /usr/local/etc/{next,docker-compose}.yml pull ##
+## systemctl restart mdg                                                          ##
+##                                                                                ##
+## To restore database from the backup upload the backup file to some location    ##
+## And run some command                                                           ##
+##                                                                                ##
+####################################################################################
