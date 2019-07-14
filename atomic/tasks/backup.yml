@@ -25,6 +25,23 @@
     path: /srv/duplicati
     state: directory
 
+- name: Make duplicati config accessible
+  sefcontext:
+    target: /srv/duplicati
+    setype: svirt_sandbox_file_t
+    state: present
+
+- name: Make backup location accessible
+  sefcontext:
+    target: /srv/mdgbackup
+    setype: svirt_sandbox_file_t
+    state: present
+
+- name: Pre pull duplicati
+  docker_image:
+    name: linuxserver/duplicati
+    pull: yes
+
 - name: Deploy duplicati service
   copy:
     src: templates/duplicati.service
