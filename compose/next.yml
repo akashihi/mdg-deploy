@@ -19,11 +19,14 @@ services:
       - backend
     restart: always
   elasticsearch:
-    build: ./esdb
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.2.0
     volumes:
       - es-data:/usr/share/elasticsearch/data
+      - ./dictionaries:/usr/share/elasticsearch/config/hunspell/dictionaries
     networks:
       - backend
+    environment:
+      - discovery.type=single-node
     restart: always
   mdg:
     image: akashihi/mdg:next

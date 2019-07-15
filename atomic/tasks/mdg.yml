@@ -10,21 +10,13 @@
     dest: /usr/local/etc/
     directory_mode: yes
 
-- name: Pre pull elasticsearch
-  docker_image:
-    name: docker.elastic.co/elasticsearch/elasticsearch:7.2.0
-    pull: yes
-
 - name: Make dictionary files accessible
-  shell: find /usr/local/etc/esdb -type d  |xargs chmod a+rx && find /usr/local/etc/esdb -type d  |xargs chmod a+rx
+  shell: find /usr/local/etc/dictionaries -type d  |xargs chmod a+rx && find /usr/local/etc/dictionaries -type f  |xargs chmod a+rx && chcon -Rt svirt_sandbox_file_t /usr/local/etc/dictionaries
 
 - name: Make db init script accessible
   file:
     path: /usr/local/etc/00-createdb.sql
     mode: 0644
-
-- name: Build custom images
-  command: /usr/local/bin/docker-compose -f /usr/local/etc/{{flavor}}.yml build
 
 - name: Pull MDG
   command: /usr/local/bin/docker-compose -f /usr/local/etc/{{flavor}}.yml pull
