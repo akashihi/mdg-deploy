@@ -27,6 +27,7 @@ services:
       - backend
     environment:
       - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
     restart: always
   mdg:
     image: akashihi/mdg:next
