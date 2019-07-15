@@ -13,7 +13,7 @@
 ##                                                                                ##
 ## To restore database from the backup upload the backup file to some location    ##
 ## and run the following command                                                  ##
-## docker run -i --rm --link etc_postgres_1:postgres postgres \                   ##
+## docker run -i --rm --network etc_backend --link etc_postgres_1:postgres \      ##
 ##   psql -h postgres -U postgres < dump_mdg.sql                                  ##
 ##                                                                                ##
 ####################################################################################
